@@ -23,7 +23,6 @@ gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", g
 gdrive_id = "1Oelj-dJWhUocrT_1DkAtApQlC3zKCxkB"
 url = f"https://drive.google.com/uc?id={gdrive_id}"
 zip_path = "chroma_db.zip"
-gdown.download(url, zip_path, quiet=False)
 extract_dir = "./"
 
 if "db_loaded" not in st.session_state:
