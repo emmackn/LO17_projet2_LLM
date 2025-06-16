@@ -2,7 +2,6 @@ langchain-core
 langchain
 langchain-google-genai
 langchain-community
-chromadb==0.4.14
+chromadb
 streamlit
 gdown
-python_version==3.10
