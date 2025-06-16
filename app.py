@@ -24,16 +24,24 @@ gdrive_id = "1Oelj-dJWhUocrT_1DkAtApQlC3zKCxkB"
 url = f"https://drive.google.com/uc?id={gdrive_id}"
 zip_path = "chroma_db.zip"
 gdown.download(url, zip_path, quiet=False)
-
 extract_dir = "./"
 
-with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-    zip_ref.extractall(extract_dir)
+if "db_loaded" not in st.session_state:
+    # Télécharger et extraire
+    gdown.download(url, zip_path, quiet=False)
 
-vectorstore_disk = Chroma(
-                        persist_directory="./chroma_db",       # Directory of db
-                        embedding_function=gemini_embeddings   # Embedding model
-                   )
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_dir)
+
+    # Charger la base
+    st.session_state.vectorstore_disk = Chroma(
+        persist_directory="./chroma_db",
+        embedding_function=gemini_embeddings
+    )
+
+    st.session_state.db_loaded = True
+else:
+    vectorstore_disk = st.session_state.vectorstore_disk
 
 # Initialisation du LLM Gemini
 llm = ChatGoogleGenerativeAI(
