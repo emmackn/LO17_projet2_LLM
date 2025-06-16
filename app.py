@@ -38,7 +38,7 @@ if "db_loaded" not in st.session_state:
         persist_directory="./chroma_db",
         embedding_function=gemini_embeddings
     )
-
+    vectorstore_disk = st.session_state.vectorstore_disk
     st.session_state.db_loaded = True
 else:
     vectorstore_disk = st.session_state.vectorstore_disk
