@@ -5,3 +5,4 @@ langchain-community
 chromadb
 streamlit
 gdown
+sqlite3 >= 3.35.0
