@@ -1,5 +1,4 @@
 import os
-import requests
 import gdown
 import zipfile
 from dotenv import load_dotenv
@@ -7,6 +6,7 @@ from datetime import datetime
 import streamlit as st
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
+from langchain.chains.llm import LLMChain
 from langchain.vectorstores import Chroma
 from langchain.chains.question_answering import load_qa_chain
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
@@ -96,7 +96,7 @@ Réponse :
 
 # Crée une StuffDocumentsChain avec formatage custom
 combine_docs_chain = StuffDocumentsChain(
-    llm_chain=load_qa_chain(llm, chain_type="stuff", prompt=prompt),
+    llm_chain=LLMChain(llm=llm, prompt=prompt),
     document_variable_name="context",
     document_prompt=PromptTemplate.from_template(
         "Extrait:\n{page_content}\n(Source: {source})"
