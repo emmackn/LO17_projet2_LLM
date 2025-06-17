@@ -8,6 +8,8 @@ import streamlit as st
 from langchain.chains import ConversationalRetrievalChain
 from langchain import PromptTemplate
 from langchain.vectorstores import Chroma
+from langchain.chains.question_answering import load_qa_chain
+from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.memory import ConversationBufferMemory
 __import__('pysqlite3')
@@ -18,6 +20,13 @@ load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Création du RAG
+
+def format_docs(docs) -> str:
+    return "\n\n".join(
+        f"Extrait:\n{doc.page_content}\n(Source: {doc.metadata.get('source', 'Inconnue')})"
+        for doc in docs
+    )
+
 gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
 
 gdrive_id = "1Oelj-dJWhUocrT_1DkAtApQlC3zKCxkB"
@@ -85,12 +94,21 @@ Contexte : {context}
 Réponse :
 """)
 
+# Crée une StuffDocumentsChain avec formatage custom
+combine_docs_chain = StuffDocumentsChain(
+    llm_chain=load_qa_chain(llm, chain_type="stuff", prompt=prompt),
+    document_variable_name="context",
+    document_prompt=PromptTemplate.from_template(
+        "Extrait:\n{page_content}\n(Source: {source})"
+    )
+)
+
 # Création de la chaîne de QA conversationnelle
 qa_chain = ConversationalRetrievalChain.from_llm(
     llm=llm,
     retriever=retriever,
     memory=memory,
-    combine_docs_chain_kwargs={"prompt": prompt}
+    combine_docs_chain=combine_docs_chain
 )
 
 ### Interface Streamlit ###
