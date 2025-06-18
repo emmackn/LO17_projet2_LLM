@@ -207,6 +207,13 @@ with st.container():
     )
 
     if user_input:
+        reformulated = question_generator.invoke({
+            "question": user_input,
+            "chat_history": memory.load_memory_variables({})["chat_history"]
+        })["text"]
+
+        print("Question reformulée :", reformulated)  # S'affiche dans Colab
+        st.write("Question reformulée :", reformulated)
         ai_response = qa_chain.invoke({"question": user_input})["answer"]
 
         # Mémorisation manuelle
