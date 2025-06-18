@@ -74,14 +74,13 @@ Règles à respecter :
 - N’ajoute aucun contenu promotionnel, suggestion, ou lien externe non mentionné explicitement.
 - Si l'information n’est pas disponible dans le contexte, réponds clairement : "Je ne sais pas."
 - Rédige une réponse claire, et directement utile.
-- Cite les URLs exactes des données que tu utilises.
-- Si la même URL est présente plusieurs fois, ne le cite qu'une seule et unique fois.
 
 Format :
 - Réponds de manière professionnelle.
 - Évite les formules vagues ou incertaines.
 - Si plusieurs lieux ou options sont possibles, liste-les.
 - Réponds si possible dans un format structuré (liste à points par exemple)
+- A la fin de ta réponse, propose des liens utiles qui seront uniquement les sources (URL) des données que tu utilises.
 
 Question : {question}
 Contexte : {context}
@@ -109,6 +108,8 @@ stuff_chain = StuffDocumentsChain(
 # Prompt pour la reformulation de question à partir d'une question et d'un historique
 prompt_q_generator = PromptTemplate.from_template("""
 Étant donné la conversation et la question suivante, reformule la question pour qu'elle soit une question autonome.
+Si la question te semble déjà autonome, laisse là ainsi.
+Donne directement une seule reformulation.
 Conversation précédente : {chat_history}
 Question de suivi : {question}
 Question autonome :
