@@ -220,7 +220,6 @@ with st.container():
         })["text"]
 
         print("Question reformulée :", reformulated)  # S'affiche dans Colab
-        st.write("Question reformulée :", reformulated)
         ai_response = qa_chain.invoke({"question": user_input})["answer"]
 
         # # Mémorisation manuelle
