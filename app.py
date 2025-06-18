@@ -46,7 +46,7 @@ else:
 
 # Initialisation du LLM Gemini
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.0-flash",
     google_api_key=GOOGLE_API_KEY,
     temperature=0.3
 )
@@ -73,14 +73,15 @@ Règles à respecter :
 - Ne fais aucune inférence ou supposition. Reste strictement dans le cadre du contexte.
 - N’ajoute aucun contenu promotionnel, suggestion, ou lien externe non mentionné explicitement.
 - Si l'information n’est pas disponible dans le contexte, réponds clairement : "Je ne sais pas."
-- Rédige une réponse claire, concise et directement utile.
+- Rédige une réponse claire, et directement utile.
 - Cite les URLs exactes des données que tu utilises.
-- Ne cite pas la même URL plusieurs fois.
+- Si la même URL est présente plusieurs fois, ne le cite qu'une seule et unique fois.
 
 Format :
 - Réponds de manière professionnelle.
 - Évite les formules vagues ou incertaines.
 - Si plusieurs lieux ou options sont possibles, liste-les.
+- Réponds si possible dans un format structuré (liste à points par exemple)
 
 Question : {question}
 Contexte : {context}
@@ -107,10 +108,10 @@ stuff_chain = StuffDocumentsChain(
 
 # Prompt pour la reformulation de question à partir d'une question et d'un historique
 prompt_q_generator = PromptTemplate.from_template("""
-Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
-Previous conversation: {chat_history}
-Follow Up Input: {question}
-Standalone question:
+Étant donné la conversation et la question suivante, reformule la question pour qu'elle soit une question autonome.
+Conversation précédente : {chat_history}
+Question de suivi : {question}
+Question autonome :
 """)
 question_generator = LLMChain(llm=llm, prompt=prompt_q_generator)
 
