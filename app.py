@@ -60,6 +60,11 @@ memory = ConversationBufferMemory(
     return_messages=True
 )
 
+if "chat_history" in st.session_state and st.session_state.chat_history:
+    for user_msg, ai_msg in st.session_state.chat_history:
+        memory.chat_memory.add_user_message(user_msg)
+        memory.chat_memory.add_ai_message(ai_msg)
+
 # Prompt précis pour le comportement du modèle
 prompt = PromptTemplate.from_template("""
 Tu es un guide touristique expert. Ta tâche est de répondre à la question de l'utilisateur en t'appuyant uniquement sur les informations fournies dans le contexte.
@@ -216,9 +221,9 @@ with st.container():
         st.write("Question reformulée :", reformulated)
         ai_response = qa_chain.invoke({"question": user_input})["answer"]
 
-        # Mémorisation manuelle
-        memory.chat_memory.add_user_message(user_input)
-        memory.chat_memory.add_ai_message(ai_response)
+        # # Mémorisation manuelle
+        # memory.chat_memory.add_user_message(user_input)
+        # memory.chat_memory.add_ai_message(ai_response)
 
         st.session_state.chat_history.append((user_input, ai_response))
         del st.session_state["temp_input"]
