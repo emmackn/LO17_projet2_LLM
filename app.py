@@ -4,44 +4,37 @@ import zipfile
 from dotenv import load_dotenv
 from datetime import datetime
 import streamlit as st
-from langchain.chains import ConversationalRetrievalChain
+from langchain.chains import ConversationalRetrievalChain, StuffDocumentsChain, LLMChain
 from langchain import PromptTemplate
-from langchain.chains.llm import LLMChain
 from langchain.vectorstores import Chroma
-from langchain.chains.question_answering import load_qa_chain
-from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from langchain.memory import ConversationBufferMemory
+# Redirection de sqlite3 vers pysqlite3 pour la compatibilité avec Streamlit
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
+# Clé API
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# Création du RAG
+### Création du RAG ###
 
-def format_docs(docs) -> str:
-    return "\n\n".join(
-        f"Extrait:\n{doc.page_content}\n(Source: {doc.metadata.get('source', 'Inconnue')})"
-        for doc in docs
-    )
-
+# Chargement de la bdd
 gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
-
 gdrive_id = "1Oelj-dJWhUocrT_1DkAtApQlC3zKCxkB"
 url = f"https://drive.google.com/uc?id={gdrive_id}"
 zip_path = "chroma_db.zip"
 extract_dir = "./"
 
+# Évite de re-télécharger la bdd à chaque action sur streamlit
 if "db_loaded" not in st.session_state:
-    # Télécharger et extraire
+    # Télécharger et extraire le zip de la bdd sur gdrive
     gdown.download(url, zip_path, quiet=False)
 
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
 
-    # Charger la base
     st.session_state.vectorstore_disk = Chroma(
         persist_directory="./chroma_db",
         embedding_function=gemini_embeddings
@@ -58,19 +51,14 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.3
 )
 
-# Utilisation du vectorstore_disk précédemment défini
+# Utilisation du vectorstore_disk en tant que retriever
 retriever = vectorstore_disk.as_retriever(search_kwargs={"k": 5})
 
 # Mémoire pour gérer l’historique de la conversation
 memory = ConversationBufferMemory(
     memory_key="chat_history",
-    return_messages=True  # Important pour Gemini
+    return_messages=True
 )
-
-if "chat_history" in st.session_state and st.session_state.chat_history:
-    for user_msg, ai_msg in st.session_state.chat_history:
-        memory.chat_memory.add_user_message(user_msg)
-        memory.chat_memory.add_ai_message(ai_msg)
 
 # Prompt précis pour le comportement du modèle
 prompt = PromptTemplate.from_template("""
@@ -79,7 +67,7 @@ Tu es un guide touristique expert. Ta tâche est de répondre à la question de 
 Règles à respecter :
 - Ne fais aucune inférence ou supposition. Reste strictement dans le cadre du contexte.
 - N’ajoute aucun contenu promotionnel, suggestion, ou lien externe non mentionné explicitement.
-- Si l'information n’est pas disponible dans le contexte, réponds clairement que tu ne sais pas.
+- Si l'information n’est pas disponible dans le contexte, réponds clairement : "Je ne sais pas."
 - Rédige une réponse claire, concise et directement utile.
 - Cite les URLs exactes des données que tu utilises.
 - Ne cite pas la même URL plusieurs fois.
@@ -94,21 +82,39 @@ Contexte : {context}
 Réponse :
 """)
 
-# Crée une StuffDocumentsChain avec formatage custom
-combine_docs_chain = StuffDocumentsChain(
-    llm_chain=LLMChain(llm=llm, prompt=prompt),
-    document_variable_name="context",
-    document_prompt=PromptTemplate.from_template(
-        "Extrait:\n{page_content}\n(Source: {source})"
-    )
+# Formattage des documents retournés (inclut l'URL)
+document_prompt = PromptTemplate(
+    input_variables=["page_content", "source"],
+    template="{page_content}\n(Source: {source})"
 )
 
-# Création de la chaîne de QA conversationnelle
-qa_chain = ConversationalRetrievalChain.from_llm(
+# llm_chain pour combiner les docs (contexte)
+llm_chain_for_docs = LLMChain(
     llm=llm,
+    prompt=prompt
+)
+
+stuff_chain = StuffDocumentsChain(
+    llm_chain=llm_chain_for_docs,
+    document_prompt=document_prompt,
+    document_variable_name="context"
+)
+
+# Prompt pour la reformulation de question à partir d'une question et d'un historique
+prompt_q_generator = PromptTemplate.from_template("""
+Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
+Previous conversation: {chat_history}
+Follow Up Input: {question}
+Standalone question:
+""")
+question_generator = LLMChain(llm=llm, prompt=prompt_q_generator)
+
+# Création de la ConversationalRetrievalChain
+qa_chain = ConversationalRetrievalChain(
     retriever=retriever,
-    memory=memory,
-    combine_docs_chain=combine_docs_chain
+    combine_docs_chain=stuff_chain,
+    question_generator=question_generator,
+    memory=memory
 )
 
 ### Interface Streamlit ###
@@ -202,6 +208,10 @@ with st.container():
 
     if user_input:
         ai_response = qa_chain.invoke({"question": user_input})["answer"]
+
+        # Mémorisation manuelle
+        memory.chat_memory.add_user_message(user_input)
+        memory.chat_memory.add_ai_message(ai_response)
 
         st.session_state.chat_history.append((user_input, ai_response))
         del st.session_state["temp_input"]

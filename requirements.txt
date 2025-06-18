@@ -6,4 +6,7 @@ chromadb
 streamlit
 gdown
 pysqlite3-binary
-
+requests
+dotenv
+beautifulsoup4
+mwxml
