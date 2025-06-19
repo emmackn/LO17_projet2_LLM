@@ -22,7 +22,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Chargement de la bdd
 gemini_embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
-gdrive_id = "1Oelj-dJWhUocrT_1DkAtApQlC3zKCxkB"
+gdrive_id = "1_JLw7xeWNw9SRFls_yM9Vfy8m19UVlYq"
 url = f"https://drive.google.com/uc?id={gdrive_id}"
 zip_path = "chroma_db.zip"
 extract_dir = "./"
