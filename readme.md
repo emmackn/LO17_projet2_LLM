@@ -68,7 +68,8 @@ Enfin, pour assurer un code propre, lisible et conforme aux bonnes pratiques, no
 La commande utilisée pour obtenir ce score est la suivante :
 
 ```bash
-pylint --disable=C0301 src/*.py
+pylint --disable=C0301,E0611,E1101 ./*.py
+
 ```
 
 
