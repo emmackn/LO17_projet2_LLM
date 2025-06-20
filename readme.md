@@ -60,7 +60,11 @@ LO17_projet2_LLM/
 ## Évaluation du code
 
 Enfin, pour assurer un code propre, lisible et conforme aux bonnes pratiques, nous avons utilisé l’outil `pylint` afin d’analyser l’ensemble de notre base de code. Grâce à ce travail, nous avons obtenu un score global supérieur à **10 / 10**, ce qui témoigne d’un code bien structuré, bien documenté et maintenable.
+
+
 ![image](https://github.com/user-attachments/assets/6fd152ac-8f0c-44b8-be91-b3837c1df397)
+
+
 La commande utilisée pour obtenir ce score est la suivante :
 
 ```bash
