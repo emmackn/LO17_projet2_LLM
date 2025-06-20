@@ -1,4 +1,4 @@
-# GENOVA – Guide Touristique Intelligent avec RAG et LLM
+# GENOVA – Guide Touristique Intelligent avec RAG
 
 Projet réalisé dans le cadre du module **LO17 – Indexation et Recherche d’Information (UTC)**.
 
