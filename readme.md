@@ -42,19 +42,19 @@ LO17_projet2_LLM/
 │
 ├── index/                        # Contient les scripts liés à l’indexation et au moteur de recherche  
 │   ├── chroma_index.py              # Script principal de création et d’interrogation de l’index Chroma (vecteurs, documents)  
-│   └── documents.py                # Préparation, nettoyage et structuration des documents avant indexation
+│   └── documents.py                # Préparation, nettoyage et structuration des documents avant indexation  
 │
-├── url_extraction/              # Contient les scripts d’extraction de données depuis les différentes sources en ligne
-│   ├── diplomatie_gouv.py          # Extraction des URLs et contenus depuis diplomatie.gouv.fr
-│   ├── routard.py                  # Extraction des URLs et contenus depuis le site du Routard
-│   └── wikivoyage.py               # Extraction des URLs et contenus depuis Wikivoyage
+├── url_extraction/              # Contient les scripts d’extraction de données depuis les différentes sources en ligne  
+│   ├── diplomatie_gouv.py          # Extraction des URLs et contenus depuis diplomatie.gouv.fr  
+│   ├── routard.py                  # Extraction des URLs et contenus depuis le site du Routard  
+│   └── wikivoyage.py               # Extraction des URLs et contenus depuis Wikivoyage  
 │
-├── .gitignore                   # Liste des fichiers et dossiers à exclure du suivi Git (logs, .env, caches, etc.)
-├── app.py                       # Script principal de l’application Streamlit (interface utilisateur)
-├── LO17_Slides_RAG.pdf          # Support de présentation utilisé lors de la soutenance du projet
-├── requirements.txt             # Liste des bibliothèques Python nécessaires au bon fonctionnement du projet
-├── readme.md                    # Documentation du projet : objectifs, instructions d’installation, usage
-└── demo_streamlit_genova.webm   # Vidéo de démonstration de l’application (fonctionnement en conditions réelles)
+├── .gitignore                   # Liste des fichiers et dossiers à exclure du suivi Git  
+├── app.py                       # Script principal de l’application Streamlit (interface utilisateur)  
+├── LO17_Slides_RAG.pdf          # Support de présentation utilisé lors de la soutenance du projet  
+├── requirements.txt             # Liste des bibliothèques Python nécessaires au bon fonctionnement du projet  
+├── readme.md                    # Documentation du projet : objectifs, instructions d’installation, usage  
+└── demo_streamlit_genova.webm   # Vidéo de démonstration de l’application (fonctionnement en conditions réelles)  
 
 
 
