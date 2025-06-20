@@ -73,13 +73,12 @@ pylint --disable=C0301,E0611,E1101 ./*.py
 ```
 
 
-
 ## Accès direct
 
 L'application est disponible en ligne à l'adresse :  
 [https://genova-rag.streamlit.app/](https://genova-rag.streamlit.app/)
 
-#### Remarque importante
+### Remarque importante
 L'application repose sur une base de données volumineuse (~2 Go).
 En cas d’erreur du type :
 
