@@ -29,7 +29,7 @@ Elle permet de répondre à des requêtes du type :
 ---
 ## Structure du projet
 
-LO17_projet2_LLM/
+LO17_projet2_LLM/  
 ├── data/                          # Contient les fichiers de liens extraits depuis différents sites sources  
 │   ├── urls_routard.csv              # Liste des URLs extraites depuis le site du Routard  
 │   ├── urls_diplomatie_gouv.csv      # Liste des URLs extraites depuis le site du Ministère des Affaires étrangères  
