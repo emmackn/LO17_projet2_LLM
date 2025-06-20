@@ -30,18 +30,18 @@ Elle permet de répondre à des requêtes du type :
 ## Structure du projet
 
 LO17_projet2_LLM/
-├── data/                          # Contient les fichiers de liens extraits depuis différents sites sources
-│   ├── urls_routard.csv              # Liste des URLs extraites depuis le site du Routard
-│   ├── urls_diplomatie_gouv.csv      # Liste des URLs extraites depuis le site du Ministère des Affaires étrangères
-│   └── urls_wikivoyage.csv           # Liste des URLs extraites depuis le site Wikivoyage
+├── data/                          # Contient les fichiers de liens extraits depuis différents sites sources  
+│   ├── urls_routard.csv              # Liste des URLs extraites depuis le site du Routard  
+│   ├── urls_diplomatie_gouv.csv      # Liste des URLs extraites depuis le site du Ministère des Affaires étrangères  
+│   └── urls_wikivoyage.csv           # Liste des URLs extraites depuis le site Wikivoyage  
 │
-├── evaluation/                   # Contient les scripts liés à l’évaluation des performances du système RAG
-│   └── RAG_LO17_evaluation.py       # Script d’évaluation des performances (métriques de pertinence, qualité des réponses, etc.)
+├── evaluation/                   # Contient les scripts liés à l’évaluation des performances du système RAG  
+│   └── RAG_LO17_evaluation.py       # Script d’évaluation des performances (métriques de pertinence, qualité des réponses, etc.)  
 │
-├── .env                          # Fichier de configuration pour stocker les variables d’environnement (API keys, chemins, etc.)
+├── .env                          # Fichier de configuration pour stocker les variables d’environnement (API keys, chemins, etc.)  
 │
-├── index/                        # Contient les scripts liés à l’indexation et au moteur de recherche
-│   ├── chroma_index.py              # Script principal de création et d’interrogation de l’index Chroma (vecteurs, documents)
+├── index/                        # Contient les scripts liés à l’indexation et au moteur de recherche  
+│   ├── chroma_index.py              # Script principal de création et d’interrogation de l’index Chroma (vecteurs, documents)  
 │   └── documents.py                # Préparation, nettoyage et structuration des documents avant indexation
 │
 ├── url_extraction/              # Contient les scripts d’extraction de données depuis les différentes sources en ligne
