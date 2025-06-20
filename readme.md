@@ -50,8 +50,8 @@ LO17_projet2_LLM/
 │   └── wikivoyage.py               # Extraction des URLs et contenus depuis Wikivoyage  
 │
 ├── .gitignore                   # Liste des fichiers et dossiers à exclure du suivi Git  
-├── app.py                       # Script principal de l’application Streamlit (interface utilisateur)  
-├── LO17_Slides_RAG.pdf          # Support de présentation utilisé lors de la soutenance du projet 
+├── app.py                       # Script principal de l’application Streamlit (interface utilisateur)    
+├── LO17_Slides_RAG.pdf          # Support de présentation utilisé lors de la soutenance du projet   
 ├── LO17_Rapport_RAG.pdf          # Rapport de projet    
 ├── requirements.txt             # Liste des bibliothèques Python nécessaires au bon fonctionnement du projet  
 ├── readme.md                    # Documentation du projet : objectifs, instructions d’installation, usage  
