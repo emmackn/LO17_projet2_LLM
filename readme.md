@@ -57,6 +57,9 @@ LO17_projet2_LLM/
 ├── readme.md                    # Documentation du projet : objectifs, instructions d’installation, usage  
 └── demo_streamlit_genova.webm   # Vidéo de démonstration de l’application (fonctionnement en conditions réelles)  
 
+pylint --disable=C0301,E0611,E1101 ./*.py
+
+![image](https://github.com/user-attachments/assets/6fd152ac-8f0c-44b8-be91-b3837c1df397)
 
 
 ## Accès direct
