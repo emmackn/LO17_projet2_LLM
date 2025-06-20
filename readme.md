@@ -79,6 +79,14 @@ pylint --disable=C0301,E0611,E1101 ./*.py
 L'application est disponible en ligne à l'adresse :  
 [https://genova-rag.streamlit.app/](https://genova-rag.streamlit.app/)
 
+#### Remarque importante
+L'application repose sur une base de données volumineuse (~2 Go).
+En cas d’erreur du type :
+
+**gdown.exceptions.FileURLRetrievalError
+(This app has encountered an error...)**
+
+cela signifie que la limite de téléchargement du lien Google Drive a été atteinte ; il suffit alors simplement de réessayer plus tard.
 
 ## Auteurs
 Projet réalisé par :
