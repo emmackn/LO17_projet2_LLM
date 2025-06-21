@@ -37,13 +37,13 @@ LO17_projet2_LLM/
 │
 ├── evaluation/                   # Contient les scripts liés à l’évaluation des performances du système RAG  
 │   └── RAG_LO17_evaluation.py       # Script d’évaluation des performances (métriques de pertinence, qualité des réponses, etc.)  
-│
+│  
 ├── .env                          # Fichier de configuration pour stocker les variables d’environnement (API keys, chemins, etc.)  
-│
+│  
 ├── index/                        # Contient les scripts liés à l’indexation et au moteur de recherche  
 │   ├── chroma_index.py              # Script principal de création et d’interrogation de l’index Chroma (vecteurs, documents)  
 │   └── documents.py                # Préparation, nettoyage et structuration des documents avant indexation  
-│
+│    
 ├── url_extraction/              # Contient les scripts d’extraction de données depuis les différentes sources en ligne  
 │   ├── diplomatie_gouv.py          # Extraction des URLs et contenus depuis diplomatie.gouv.fr  
 │   ├── routard.py                  # Extraction des URLs et contenus depuis le site du Routard  
