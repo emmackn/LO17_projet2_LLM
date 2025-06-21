@@ -48,7 +48,7 @@ LO17_projet2_LLM/
 │   ├── diplomatie_gouv.py          # Extraction des URLs et contenus depuis diplomatie.gouv.fr  
 │   ├── routard.py                  # Extraction des URLs et contenus depuis le site du Routard  
 │   └── wikivoyage.py               # Extraction des URLs et contenus depuis Wikivoyage  
-│
+│  
 ├── .gitignore                   # Liste des fichiers et dossiers à exclure du suivi Git  
 ├── app.py                       # Script principal de l’application Streamlit (interface utilisateur)    
 ├── LO17_Slides_RAG.pdf          # Support de présentation utilisé lors de la soutenance du projet   
